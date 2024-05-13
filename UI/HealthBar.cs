@@ -134,19 +134,24 @@ namespace AnotherRpgMod.UI
                 hiden = false;
                 OnInitialize();
             }
+
+            RessourceTexture[Mode.HP].position.Y = Main.screenHeight + YDefaultOffSet - 105*scale;
+            RessourceTexture[Mode.HP].position.X = -1;
+
+
             buffPanel.Top.Set(Main.screenHeight - baseUiHeight + YDefaultOffSet + 185 * scale, 0f);
             Player player = Main.player[Main.myPlayer]; //Get Player
 
             if (player.GetModPlayer<RPGPlayer>().m_virtualRes > 0)
             {
-                health.Left.Set(450 * scale, 0f);
-                health.SetText("" + player.statLife + " | " + player.statLifeMax2 + " (" + player.statLifeMax2/(1- player.GetModPlayer<RPGPlayer>().m_virtualRes)+")"); //Set Life
+                //health.Left.Set(450 * scale, 0f);
+                health.SetText("HP    " + player.statLife + " (" + player.statLifeMax2/(1- player.GetModPlayer<RPGPlayer>().m_virtualRes)+")"); //Set Life
             }
             else
-                health.SetText("" + player.statLife + " | " + player.statLifeMax2); //Set Life
+                health.SetText("HP    " + player.statLife); //Set Life
 
 
-            manatext.SetText("" + player.statMana + " | " + player.statManaMax2); //Set Mana
+            manatext.SetText("MP    " + player.statMana); //Set Mana
             xptext.SetText("" + (float)player.GetModPlayer<RPGPlayer>().GetExp() + " | " + (float)player.GetModPlayer<RPGPlayer>().XPToNextLevel()); //Set Mana
             Level.SetText("Lvl. " + (float)player.GetModPlayer<RPGPlayer>().GetLevel());
 
@@ -355,20 +360,24 @@ namespace AnotherRpgMod.UI
             float[] baseUiOffset =
             {
                 (105*scale),
-                (69*scale ),
-                (46*scale ),
+                (90*scale ),
+                (105*scale ),
                 (33*scale ),
                 (357*scale )
             };
 
-            RessourceTexture[Mode.Leech].position.Y = Main.screenHeight + YDefaultOffSet - baseUiOffset[0];
+            RessourceTexture[Mode.Leech].position.Y = 99999;
             RessourceTexture[Mode.HP].position.Y = Main.screenHeight + YDefaultOffSet - baseUiOffset[0];
+            RessourceTexture[Mode.HP].position.X = 0;
             RessourceTexture[Mode.MANA].position.Y = Main.screenHeight + YDefaultOffSet - baseUiOffset[1];
+            RessourceTexture[Mode.MANA].position.X = 0;
             RessourceTexture[Mode.XP].position.Y = Main.screenHeight + YDefaultOffSet - baseUiOffset[2];
-            RessourceTexture[Mode.Weapon].position.Y = Main.screenHeight + YDefaultOffSet - baseUiOffset[3];
+            RessourceTexture[Mode.XP].position.X = 50;
+            
+            RessourceTexture[Mode.Weapon].position.Y = 99999;
             RessourceTexture[Mode.Breath].position.Y = Main.screenHeight + YDefaultOffSet - baseUiOffset[4];
 
-            
+            RessourceTexture[Mode.HP].size.X = 0.5f;
 
             player = Main.player[Main.myPlayer];
 
@@ -443,16 +452,16 @@ namespace AnotherRpgMod.UI
             Level = new UIText("Lvl. 1", 0.7f* scale, true);
 
 
-            health.Left.Set( 500 * scale, 0f);
-            health.Top.Set(MainPanel[0].Height.Pixels  - 99 * scale, 0f);
-            manatext.Left.Set(420* scale, 0f);
-            manatext.Top.Set(MainPanel[0].Height.Pixels  - 69 * scale, 0f);
+            health.Left.Set( 300 * scale, 0f);
+            health.Top.Set(MainPanel[0].Height.Pixels  - 115 * scale, 0f);
+            manatext.Left.Set(465* scale, 0f);
+            manatext.Top.Set(MainPanel[0].Height.Pixels  - 115 * scale, 0f);
             xptext.Left.Set(420* scale, 0f);
-            xptext.Top.Set(MainPanel[0].Height.Pixels  - 47 * scale, 0f);
+            xptext.Top.Set(MainPanel[0].Height.Pixels  - 99999 * scale, 0f);
 
             Level.Left.Set(135 * scale, 0f);
             Level.HAlign = 0;
-            Level.Top.Set(MainPanel[0].Height.Pixels  - 136 * scale, 0f);
+            Level.Top.Set(MainPanel[0].Height.Pixels  - 115 * scale, 0f);
 
             MainPanel[0].Append(health);
             MainPanel[0].Append(manatext);
@@ -588,6 +597,7 @@ namespace AnotherRpgMod.UI
             }
             quotient = Utils.Mathf.Clamp(quotient, 0, 1);
             this.Left.Set(-(1 - quotient) * width * ImageScale, 0f);
+            //this.Width.Set(quotient * width, 0f);
             Recalculate(); // recalculate the position and size
 
             base.Draw(spriteBatch);
